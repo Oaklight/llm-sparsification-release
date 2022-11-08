@@ -4,6 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
+
+bins_labs = ["0 to 1E-06", "1E-06 to 1E-05", "1E-05 to 1E-04", "1E-04 to 1E-03",
+             "1E-03 to 1E-02", "1E-02 to 1E-01", "1E-01 to 1", "1 to 10"]
+
+
 def weight_size_distro(arr):
     """
     This function takes an array of weights and returns
@@ -16,6 +21,17 @@ def weight_size_distro(arr):
     pcts = counts / sum(counts)
     
     return counts, pcts
+
+
+def plot_weights_across_layers(weight_label, results_df):
+    """
+    Function for plotting share of weights of a certain magnitude
+    across each layer of a model
+    """
+    plt.plot('layer_num', weight_label, data=results_df)
+    plt.title(f'Share of weights of magnitude {weight_label}')
+    plt.xlabel('Layer number')
+    plt.ylabel('Share of layer weights')
 
 
 def plot_weight_distro(labels, values):
@@ -61,6 +77,6 @@ def gpt_layer_analysis(layer_num, weight_dict):
     
     layer = collect_params(weight_dict, selects)
     cnts, pcts = weight_size_distro(layer)
-    plot_weight_distro(bins_labs, pcts1)
+    plot_weight_distro(bins_labs, pcts)
     
     return cnts, pcts
