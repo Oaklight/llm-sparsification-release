@@ -1,5 +1,8 @@
 # Utility functions for exploring sparsity of HuggingFace models
-
+import torch
+import numpy as np
+import matplotlib.pyplot as plt
+import re
 
 def weight_size_distro(arr):
     """
