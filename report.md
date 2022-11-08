@@ -19,12 +19,12 @@ With GPT2-XL, we see a relatively normal distribution on the log scale, with man
 For T5 V1.1-XL, we see a slightly higher-magnitude set of weights - while many are still under $10^{-2}$, far greater are between that and $10^{-1}$, and there are a much larger amount greater than $0.1$, even approaching integer 1. This would suggest slightly less potential inherent sparsity, as more weights have semi-significant absolute values.
 
 
-For BERT-Large, ...TIODODODODODODOD
+For BERT-Large, we also see a sparsity structure focused within the ($10^{-2}, 10^{-1}$) range, with only about 30% of weight magnitudes less than $10^{-2}$ and about 99% below $10^{-1}$. This suggests about 30% of the weights are easily sparsifiable, while a lot of the rest are relatively similar in magnitude. Very few weights are greater than $10^{-1}$ as well.
 
  ### CDFs
 And the following Cumulative Distribution Function:
 
-The CDFs tell pretty much the same story as the histogram - for GPT2-XL we see that nearly 100% of weight magnitudes are represented when we hit $10^{-1}$, while it's only about 50% for T5 V1.1 XL. For BERT, TODODODODOD
+The CDFs tell pretty much the same story as the histogram - for GPT2-XL and BERT we see that nearly 100% of weight magnitudes are represented when we hit $10^{-1}$, while it's only about 50% for T5 V1.1 XL.
 
 ### CDFs by Layer
 And the following Cumulative Distribution Function, split by layer of the model:
@@ -33,7 +33,7 @@ Splitting by layer, we see that for GPT2-XL the weight distributions are nearly 
 
 We also see that T5 V1.1 XL is far more diverse, with some layers containing as much as 3x more magnitudes under $10^{-3}$ as others. Those layers seem to have a solidly left-ward distribution as well, often hitting nearly 100% about 0.7 orders of magnitude earlier. 
 
-For BERT, TOSDHJSDAOIASDJASDHNJASD
+For BERT, we see nearly identical sparsity structures between the layers, with none particularly standing out.
 
 ## Sparsification
 To sparsify the models, I used the [PyTorch Global Prune](https://pytorch.org/docs/stable/generated/torch.nn.utils.prune.global_unstructured.html) function to select the weights with the lowest N% of magnitudes (L1 norm) and prune them to 0, and then used the [PyTorch Prune Remove](https://pytorch.org/docs/stable/generated/torch.nn.utils.prune.remove.html#torch.nn.utils.prune.remove) function to apply the prunes, and then used the huggingface function to save the model. I applied this in one pass instead of iteratively pruning and re-training
