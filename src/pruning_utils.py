@@ -23,3 +23,13 @@ def prune_gpt2_layers(ratio):
                 prune.remove(module, 'weight')
                 prune.l1_unstructured(module, name='bias', amount=ratio)
                 prune.remove(module, 'bias')
+
+        
+
+def check_gpt_layer_sparsity(layer_num):
+    print(
+    "Sparsity in h.{}.attn.c_attn.weight: {:.2f}%".format(10,
+        100. * float(torch.sum(model.h[layer_num].attn.c_attn.weight == 0))
+        / float(model.h[layer_num].attn.c_attn.weight.nelement())
+    )
+)
