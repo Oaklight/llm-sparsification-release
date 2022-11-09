@@ -26,7 +26,7 @@ def prune_gpt2_layers(model, ratio):
 
         
 
-def check_gpt_layer_sparsity(layer_num):
+def check_gpt_layer_sparsity(model, layer_num):
     print(
     "Sparsity in h.{}.attn.c_attn.weight: {:.2f}%".format(10,
         100. * float(torch.sum(model.h[layer_num].attn.c_attn.weight == 0))
