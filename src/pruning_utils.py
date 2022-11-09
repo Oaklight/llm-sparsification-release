@@ -8,7 +8,7 @@ import re
 
 
 
-def prune_gpt2_layers(ratio):
+def prune_gpt2_layers(model, ratio):
 
     for i in range(48):
         list= ['transformer.h.{}.attn.c_attn'.format(i),
