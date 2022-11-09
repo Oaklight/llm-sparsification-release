@@ -11,12 +11,12 @@ import re
 def prune_gpt2_layers(ratio):
 
     for i in range(48):
-        list= ['h.{}.attn.c_attn'.format(i),
-                'h.{}.attn.c_proj'.format(i),
+        list= ['transformer.h.{}.attn.c_attn'.format(i),
+                'transformer.h.{}.attn.c_proj'.format(i),
                 #'h.{}.ln_1'.format(i), leave layer norms unpruned
                 #'h.{}.ln_2'.format(i),
-                'h.{}.mlp.c_fc'.format(i),
-                'h.{}.mlp.c_proj'.format(i)]
+                'transformer.h.{}.mlp.c_fc'.format(i),
+                'transformer.h.{}.mlp.c_proj'.format(i)]
         for name, module in model.named_modules():
             if name in list:
                 prune.l1_unstructured(module, name='weight', amount=ratio)
