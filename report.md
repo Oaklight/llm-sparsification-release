@@ -1,3 +1,8 @@
+## Guide to Notebooks
+
+I only have 2 notebooks - one, `sparse.ipynb`, to analyze the sparsity structure of each model and then compute sparsified versions of each, and then `generate_plots.ipynb` to generate the speed/size/performance plots for the sparsified/base models. Then, `src/run.sh` is the script to compute each benchmark.
+
+
 ## Model Selection
 
 For my 3 models, I've chosen:
