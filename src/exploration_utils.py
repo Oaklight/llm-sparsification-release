@@ -113,7 +113,7 @@ def deberta_layer_analysis(layer_num, weight_dict):
 
     # search params keys for each layers params
     num = str(layer_num)
-    search_str = "layer." + num + "\.\S*"
+    search_str = "encoder.layer." + num + "\.\S*"
     reg1 = re.compile(search_str)
     selects = reg1.findall('  '.join(weight_dict.keys()))
     
