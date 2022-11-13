@@ -80,3 +80,45 @@ def gpt_layer_analysis(layer_num, weight_dict):
     plot_weight_distro(bins_labs, pcts)
     
     return cnts, pcts
+
+
+# 'encoder.layer.46.attention.self.query_proj.weight',
+# 'encoder.layer.46.attention.self.query_proj.bias',
+# 'encoder.layer.46.attention.self.key_proj.weight',
+# 'encoder.layer.46.attention.self.key_proj.bias',
+# 'encoder.layer.46.attention.self.value_proj.weight',
+# 'encoder.layer.46.attention.self.value_proj.bias',
+
+# 'encoder.layer.46.attention.output.dense.weight',
+# 'encoder.layer.46.attention.output.dense.bias',
+
+# 'encoder.layer.46.attention.output.LayerNorm.weight',
+# 'encoder.layer.46.attention.output.LayerNorm.bias',
+
+# 'encoder.layer.46.intermediate.dense.weight',
+# 'encoder.layer.46.intermediate.dense.bias',
+
+# 'encoder.layer.46.output.dense.weight',
+# 'encoder.layer.46.output.dense.bias',
+
+# 'encoder.layer.46.output.LayerNorm.weight',
+# 'encoder.layer.46.output.LayerNorm.bias', 
+
+def deberta_layer_analysis(layer_num, weight_dict):
+    """
+    Function that takes the number of a deberta
+    layer and returns it's weight distribution
+    and plots them
+    """
+
+    # search params keys for each layers params
+    num = str(layer_num)
+    search_str = "layer." + num + "\.\S*"
+    reg1 = re.compile(search_str)
+    selects = reg1.findall('  '.join(weight_dict.keys()))
+    
+    layer = collect_params(weight_dict, selects)
+    cnts, pcts = weight_size_distro(layer)
+    plot_weight_distro(bins_labs, pcts)
+    
+    return cnts, pcts
