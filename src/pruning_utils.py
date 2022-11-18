@@ -24,7 +24,32 @@ def prune_gpt2_layers(model, ratio):
                 prune.l1_unstructured(module, name='bias', amount=ratio)
                 prune.remove(module, 'bias')
 
-        
+
+
+def prune_M2M100_layers(model, ratio):
+
+    for i in range(23):
+        mod_list= ['model.encoder.layers.{}.self_attn.k_proj'.format(i),
+                'model.encoder.layers.{}.self_attn.v_proj'.format(i),
+                'model.encoder.layers.{}.self_attn.q_proj'.format(i),
+                'model.encoder.layers.{}.self_attn.out_proj'.format(i),
+                'model.encoder.layers.{}.fc1'.format(i),
+                'model.encoder.layers.{}.fc2'.format(i),
+                'model.decoder.layers.{}.self_attn.k_proj'.format(i),
+                'model.decoder.layers.{}.self_attn.v_proj'.format(i),
+                'model.decoder.layers.{}.self_attn.q_proj'.format(i),
+                'model.decoder.layers.{}.self_attn.out_proj'.format(i),
+                'model.decoder.layers.{}.fc1'.format(i),
+                'model.decoder.layers.{}.fc2'.format(i)]
+        for name, module in model.named_modules():
+            if name in mod_list:
+                prune.l1_unstructured(module, name='weight', amount=ratio)
+                prune.remove(module, 'weight')
+                prune.l1_unstructured(module, name='bias', amount=ratio)
+                prune.remove(module, 'bias')
+
+
+
 
 def check_gpt_layer_sparsity(model, layer_num):
     print(
@@ -33,3 +58,5 @@ def check_gpt_layer_sparsity(model, layer_num):
         / float(model.transformer.h[layer_num].attn.c_attn.weight.nelement())
     )
 )
+
+
