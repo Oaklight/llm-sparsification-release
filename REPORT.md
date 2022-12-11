@@ -25,5 +25,20 @@ First note that the size of these models is variable
 There may be triples of models that are closer in size so that size does not confound with architecture in our analyses, 
 but at least these are in the same order of magnitude. 
 
+Now, to take a look at the parameter histograms, we see that they are all very peaky around 0, so, out of these hundreds of millions of parameters, a lot of parameters that are doing more-or-less nothing. 
+![image](https://user-images.githubusercontent.com/25695528/206887850-e7945023-16d8-4ab2-960f-49e846828eec.png)
+
+We can take a step towards quantifying how much nothing they are doing by plotting how the number of them that have a magnitude less than some cutoff changes as that cutoff grows: 
+![image](https://user-images.githubusercontent.com/25695528/206887899-f7b1d56c-f60e-4d8f-89c0-c6e2fc99ac85.png)
+
+This gives us the sense that the relative sparsity (where here I mean "fraction of parameters that are close to zero") decreases as we move from BERT to GPT2 to Pegasus. This corresponds with the sparsity decreasing as the number of parameters increases, but I'm not going to claim thats a general trend (I doubt it is), its just what we see here. To get another view of this, we can just consider the fraction of parameters that have a magnitude below some fixed cutoff. I arbitrarily chose the cutoff to be 0.1, which is maybe a little too big for a parameter to be mostly useless, but I think its an easy place to start, as the difference across the models is quite striking at this point
+
+| model | frac params < 0.1 | 
+| ----- | ---------|
+| bert  | 0.98 |
+| gpt-2 | 0.59 |
+| pegasus | 0.23 | 
+
+
 
 
