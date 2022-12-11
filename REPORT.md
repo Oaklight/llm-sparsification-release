@@ -31,7 +31,8 @@ Now, to take a look at the parameter histograms, we see that they are all very p
 
 We can take a step towards quantifying how much nothing they are doing by plotting how the number of them that have a magnitude less than some cutoff changes as that cutoff grows:  
 
-![image](https://user-images.githubusercontent.com/25695528/206888607-5d2ce0e3-5b91-4017-8352-56fe0e744a70.png)
+![image](https://user-images.githubusercontent.com/25695528/206889820-d7e28124-0d35-46c7-aee1-f24465248196.png)
+
 
 This gives us the sense that the relative sparsity (where here I mean "fraction of parameters that are close to zero") decreases as we move from BERT to GPT2 to Pegasus. This corresponds with the sparsity decreasing as the number of parameters increases, but I'm not going to claim thats a general trend (I doubt it is), its just what we see here. 
 
@@ -51,7 +52,9 @@ If we take a look at these distributions broken down by layer, we see that the e
 
 ## Sparsification results
 
-I used `pytorch.prune` for this part, so I assumed things would go smoothly. They didn't, and I ran into a lot of trouble. 
+I used `pytorch.prune` for this part. For simplicity, I just did global pruning. 
+
+Because the pytorch prune tutorial looks pretty simple, I assumed things would go smoothly. They didn't, and I ran into a lot of trouble. 
 
 The first difficulty is that I ran into issues pruning the BART model, so I replaced it with Pegasus. Then trying to prune pegasus repeatedly crashed my compute node. So, I decided to just prune the E-o and D-o models. 
 
@@ -69,3 +72,22 @@ Interestingly, in this case, GPT2 actually gets slower under pruning. This is ki
 ### Fine-tuned models 
 
 I encountered another difficulty, in that the fine-tuning and benchmarking evaluation code from  [huggingface pytorch examples] (https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) repeatedly crashed when fine-tuning `bert`, so I was only able to fine-tune GPT2. Here are the results
+
+![image](https://user-images.githubusercontent.com/25695528/206889795-77bcc9c1-074a-4f6f-a6f9-f8d8a85834ac.png)
+![image](https://user-images.githubusercontent.com/25695528/206889797-4b282606-a819-475a-ad37-2fdc4e4b8e0a.png)
+
+I am actually quite pleased with these results. This is the first time (!) I have successfully fine tuned a transformer and gotten clean results. Although there are a lot of training wheels still on here, that is something. 
+
+I note that there is a very obvious sweetspot in terms of speed and accuracy at 50% pruning for this model and task. Of course, we expect this to vary with model and task, and pruning method. 
+
+## Model Sizes
+I had some difficulty computing the model sizes for this work. It seems like pytorch prune works by computing a mask on the parameters, rather than by actually deleting them. So, when I computed the sizes of the models, they were all the same. They are also all the same on disk.
+Their sizes on disk are:
+|model| size|
+|----|----|
+|bert | 418 M|
+| gpt2 | 487 M  |
+
+## Notes on difficulties in pruning transformers. 
+
+Most of the difficulties I encountered above were just related to me being new at working with transformers. However, I the result I saw on model sizes gives me pause. It appears that pytorch prune stores pruned model parameters as just masked dense matrices. This gives us _no_ advantage on space taken up by the model, and I am slightly confused about why the speed improved. If we wish to deploy transformers in edge settings, it seems like advances need to be made in storing the sparsified models on disc and representing them as sparse datasstructures in memory. I am reminded of Rick's lecture on how modern hardware
