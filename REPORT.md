@@ -2,7 +2,7 @@
 
 ## Collaboration note
 
-Alok gave me some tips on how to approach this (i.e., how to use pytorch prune, and to use the [huggingface pytorch examples](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) for running the benchmarks. 
+Alok gave me some tips on how to approach this (i.e., how to use pytorch prune, and to use the [huggingface pytorch examples](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) for running the benchmarks)
 
 ## Models
 
