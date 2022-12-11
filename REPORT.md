@@ -1,5 +1,9 @@
 # LLM Sparsification homework 
 
+## Collaboration note
+
+Alok gave me some tips on how to approach this (i.e., how to use pytorch prune, and to use the [huggingface pytorch examples](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) for running the benchmarks. 
+
 ## Models
 
 My model choices are 
@@ -71,7 +75,7 @@ Interestingly, in this case, GPT2 actually gets slower under pruning. This is ki
 
 ### Fine-tuned models 
 
-I encountered another difficulty, in that the fine-tuning and benchmarking evaluation code from  [huggingface pytorch examples] (https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) repeatedly crashed when fine-tuning `bert`, so I was only able to fine-tune GPT2. Here are the results
+I encountered another difficulty, in that the fine-tuning and benchmarking evaluation code from  [huggingface pytorch examples](https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) repeatedly crashed when fine-tuning `bert`, so I was only able to fine-tune GPT2. Here are the results
 
 ![image](https://user-images.githubusercontent.com/25695528/206889795-77bcc9c1-074a-4f6f-a6f9-f8d8a85834ac.png)
 ![image](https://user-images.githubusercontent.com/25695528/206889797-4b282606-a819-475a-ad37-2fdc4e4b8e0a.png)
@@ -90,4 +94,4 @@ Their sizes on disk are:
 
 ## Notes on difficulties in pruning transformers. 
 
-Most of the difficulties I encountered above were just related to me being new at working with transformers. However, I the result I saw on model sizes gives me pause. It appears that pytorch prune stores pruned model parameters as just masked dense matrices. This gives us _no_ advantage on space taken up by the model, and I am slightly confused about why the speed improved. If we wish to deploy transformers in edge settings, it seems like advances need to be made in storing the sparsified models on disc and representing them as sparse datasstructures in memory. I am reminded of Rick's lecture on how modern hardware
+Most of the difficulties I encountered above were just related to me being new at working with transformers. However, I the result I saw on model sizes gives me pause. It appears that pytorch prune stores pruned model parameters as just masked dense matrices. This gives us _no_ advantage on space taken up by the model, and I am slightly confused about why the speed improved. If we wish to deploy transformers in edge settings, it seems like advances need to be made in storing the sparsified models on disc and representing them as sparse datasstructures in memory. I am reminded of Rick's lecture on how modern hardware is optimized for dense operations, and see this a major limitation for edge deploument of transformers. perhaps work is alredy being done on hardware to solve this problem
