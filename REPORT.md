@@ -51,5 +51,21 @@ If we take a look at these distributions broken down by layer, we see that the e
 
 ## Sparsification results
 
+I used `pytorch.prune` for this part, so I assumed things would go smoothly. They didn't, and I ran into a lot of trouble. 
 
+The first difficulty is that I ran into issues pruning the BART model, so I replaced it with Pegasus. Then trying to prune pegasus repeatedly crashed my compute node. So, I decided to just prune the E-o and D-o models. 
 
+I wrote the pruned models to disk and used the examples code from the to run the benchmark [huggingface pytorch examples] (https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling)
+
+In the interest of time, I was only able to run against one benchmar (wikitext).
+
+### Pretrained models only
+
+First I tried to see if I could get away without fine-tuning these models. The lackluster results below show that, no, I cant. (Especially the BERT model appears to have extremely bad performance on this task without finetuning). 
+![image](https://user-images.githubusercontent.com/25695528/206889552-1ee2a804-74ed-45c3-8a8f-b70dc9f5c2b8.png)
+![image](https://user-images.githubusercontent.com/25695528/206889589-530e8c88-cf35-40e0-8845-2cd47bc9c5fe.png)
+Interestingly, in this case, GPT2 actually gets slower under pruning. This is kindof bizarre, since more of the weights are masked out. This may be related to the lack of fine-tuning, but I am not sure
+
+### Fine-tuned models 
+
+I encountered another difficulty, in that the fine-tuning and benchmarking evaluation code from  [huggingface pytorch examples] (https://github.com/huggingface/transformers/tree/main/examples/pytorch/language-modeling) repeatedly crashed when fine-tuning `bert`, so I was only able to fine-tune GPT2. Here are the results
