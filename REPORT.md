@@ -31,7 +31,7 @@ Now, to take a look at the parameter histograms, we see that they are all very p
 
 We can take a step towards quantifying how much nothing they are doing by plotting how the number of them that have a magnitude less than some cutoff changes as that cutoff grows:  
 
-![image](https://user-images.githubusercontent.com/25695528/206887899-f7b1d56c-f60e-4d8f-89c0-c6e2fc99ac85.png)
+![image](https://user-images.githubusercontent.com/25695528/206888607-5d2ce0e3-5b91-4017-8352-56fe0e744a70.png)
 
 This gives us the sense that the relative sparsity (where here I mean "fraction of parameters that are close to zero") decreases as we move from BERT to GPT2 to Pegasus. This corresponds with the sparsity decreasing as the number of parameters increases, but I'm not going to claim thats a general trend (I doubt it is), its just what we see here. 
 
