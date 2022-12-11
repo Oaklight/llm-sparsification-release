@@ -89,8 +89,8 @@ I had some difficulty computing the model sizes for this work. It seems like pyt
 Their sizes on disk are:
 |model| size|
 |----|----|
-|bert | 418 M|
-| gpt2 | 487 M  |
+|bert | 418 MB|
+| gpt2 | 487 MB |
 
 ## Notes on difficulties in pruning transformers. 
 
