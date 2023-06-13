@@ -8,11 +8,13 @@ Cole Frank
    - Encoder-Decoder: M2M100 (1,239,470,080 parameters)
 
 
-### Research questions:
-   - what fraction of parameters >> 0? overall? by layer?
-   - how does this vary by layer?
+### Sparsity analysis:
+  What fraction of parameters significantly non-zero? And how does the sparsity structure vary by layer of the model?
 
-See the notebooks: gptxl_exploration.ipynb, DeBERTa_exploration.ipynb, and M2M_exploration.ipynb
+See the notebooks: 
+   - gptxl_exploration.ipynb
+   - DeBERTa_exploration.ipynb 
+   - M2M_exploration.ipynb
 
 ### Sparsified evaluation
    Performance and runtime evaluation of sparsified versions of the models at 10%, 50%, 90%, 95%, 99% on common benchmarks
