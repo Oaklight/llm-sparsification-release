@@ -19,7 +19,9 @@ See the notebooks:
 ### Sparsified evaluation
    Performance and runtime evaluation of sparsified versions of the models at 10%, 50%, 90%, 95%, 99% on common benchmarks
 
-See the notebooks: M2M_pruning_and_eval.ipynb and gpt2xl_pruning_notebook.ipynb
+See the notebooks: 
+   - M2M_pruning_and_eval.ipynb
+   - gpt2xl_pruning_notebook.ipynb
 
 ### Conclusion
 
