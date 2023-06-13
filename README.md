@@ -1,13 +1,11 @@
-# llm-sparsification-cvf
-
-
-## Report
+## LLM Sparsification
+Cole Frank
 
 
 ### Models assessed:
    - Encoder-only: DeBERTaxxl (1,564,549,632 parameters)
    - Decoder-only: GPT2xxl (1,557,611,200 parameters)
-   - Encoder-Decoder: M2M100 (1,239,470,080)
+   - Encoder-Decoder: M2M100 (1,239,470,080 parameters)
 
 
 ### Research questions:
